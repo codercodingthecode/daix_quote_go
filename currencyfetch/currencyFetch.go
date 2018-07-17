@@ -114,7 +114,7 @@ func fetchPoloniex(url string, c chan []string) {
 // it call "restAPICaller" function passing the rest url and a coin interface pointer
 // to retrieve the data
 func fetchBitmex(url string, c chan []string) {
-	cList := make([]string, 100)
+	cList := make([]string, 0)
 	var coins CoinRest
 
 	restAPICaller(url, &coins)
@@ -175,7 +175,7 @@ func fethHitbtc(url string, c chan []string) {
 // it call "restAPICaller" function passing the rest url and a coin interface pointer
 // to retrieve the data
 func fethGdax(url string, c chan []string) {
-	cList := make([]string, 900)
+	cList := make([]string, 0)
 	var coins CoinRest
 
 	restAPICaller(url, &coins)
@@ -184,5 +184,6 @@ func fethGdax(url string, c chan []string) {
 		s := coin.(map[string]interface{})
 		cList = append(cList, s["id"].(string))
 	}
+	// fmt.Println("GDAX REST -> ", cList)
 	c <- cList
 }
