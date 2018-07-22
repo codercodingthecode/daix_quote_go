@@ -5,19 +5,24 @@ import (
 	"fmt"
 
 	ws "github.com/gorilla/websocket"
+	// "github.com/codercodingthecode/daix/currencyFetch/exchanges"
 )
 
 // SocketStream common function for all exchange, returns raw data
-func SocketStream(cL map[string][]string, ch chan interface{}) {
+// func SocketStream(cL map[string][]string, ch chan interface{}) {
+func SocketStream(exchange string, pairs []string, ch chan interface{}) {
 	var writeData interface{}
 	var tickRawData interface{}
 	var websocket ws.Dialer
-	wsConn, _, wsError := websocket.Dial(WebsocketList()["gdax"], nil) // this will have to change per loop or concurrency
+
+	// fmt.Println("WEBSOCKETLIST --> ", WebsocketList()[k])
+
+	wsConn, _, wsError := websocket.Dial(WebsocketList()[exchange], nil) // this will have to change per loop or concurrency
 	if wsError != nil {
 		fmt.Println("There was an error dialing in -> ", wsError)
 	}
 
-	b, _ := json.Marshal(cL["gdax"])
+	b, _ := json.Marshal(pairs)
 
 	// move this to struct
 	bigString := fmt.Sprintf(`{"type":"subscribe","channels": [{"name": "ticker", "product_ids": %s}]}`, b)
@@ -40,6 +45,8 @@ func SocketStream(cL map[string][]string, ch chan interface{}) {
 
 		// fmt.Println("This is the feed -> ", tickData)
 		ch <- tickRawData
+		// cb(<-ch)
+		// exchanges.Gdax(tickRawData)
 	}
 
 }

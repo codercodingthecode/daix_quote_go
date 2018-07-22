@@ -10,19 +10,17 @@ import (
 
 func main() {
 	ch := make(chan interface{})
-
+	// chOut := make(chan interface{})
 	cL := currencyfetch.FetchCurrencies()
 
-	// fmt.Println(cL)
-
 	for k, v := range cL {
-		fmt.Println(k)
+		fmt.Println("RUNNING ON MAIN")
 		go socketsclient.SocketStream(k, v, ch)
 	}
 
-	// go socketsclient.SocketStream(cL, ch)
 	for {
-		fmt.Println("Websocket CH Return -> ", <-ch)
-		<-ch
+		fmt.Println(<-ch)
 	}
+	// exchanges.Gdax(ch)
+
 }

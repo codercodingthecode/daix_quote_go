@@ -30,20 +30,6 @@ func FetchCurrencies() map[string][]string {
 	// data structure that holds the whole exchanges supported currecy list.
 	var cL = make(map[string][]string)
 
-	// list of the current exchange rest api's to fetch the currencies from each exchange.
-	// it currently calls the exchanges that provides websockets, so it can provide a list of currencies
-	// to the websockets api per exchange.
-	// urls := map[string]string{
-	// 	// "hitbtc": "https://api.hitbtc.com/api/2/public/symbol", // response -> id -> "ETHUSD" **
-	// 	"gdax": "https://api.gdax.com/products", // response -> id -> "eth" **
-	// 	// "binance":  "https://api.binance.com/api/v1/exchangeInfo",          // it needs to dig into json, response -> symbol -> baseAsset -> "ETH" **
-	// 	// "poloniex": "https://poloniex.com/public?command=returnCurrencies", // response -> "ETH"   ; the crypto is in the key **
-	// 	// https://poloniex.com/public?command=returnTicker  *change to this end point
-	// 	// "bitmex":   "https://www.bitmex.com/api/v1/stats", // needs to look into it further to find pairs                 // response -> rootSymbol -> "ETH" **
-	// 	// "bitfinex": "https://api.bitfinex.com/v1/symbols", // response -> "ethbtc"  || it takes a pair rather than the currency symbol, needs discussion on it
-	// 	// "bittrex": "https://bittrex.com/api/v1.1/public/getcurrencies", // response -> result -> Currency -> "ETH" || it uses rest api already.
-	// }
-
 	// range over the rest api list and call the api's function.
 	for k, v := range exchangeList() {
 		switch k {
